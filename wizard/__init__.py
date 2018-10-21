@@ -1,0 +1,1 @@
+import wizard_price_list_report

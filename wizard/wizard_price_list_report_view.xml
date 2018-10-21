@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<odoo>
+        
+        <record id="wizard_price_list_report_form" model="ir.ui.view">
+            <field name="name">wizard.price.list.report.form</field>
+            <field name="model">wizard.price.list.report</field>
+            <field name="arch" type="xml">
+                <form string="Send to List Price">
+                         <group>
+                            <field name="pricelist_report_id" required="1"/>
+                        </group>
+                    <footer>
+                        <button name="action_wizard_wizard_price_list_report_acc" type="object" string="Enviar a Lista Precio" class="btn-primary"/>
+                        o
+                        <button string="Cancel" class="btn-default" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="wizard_price_list_report_act" model="ir.actions.act_window">
+            <field name="name">Send to List Price</field>
+            <field name="res_model">wizard.price.list.report</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_price_list_report_form"/>
+            <field name="target">new</field>
+        </record>
+
+        <act_window
+            id="action_wizard_wizard_price_list_report_acc"
+            name="Send to List Price"
+            multi="True"
+            key2="client_action_multi"
+            res_model="wizard.price.list.report"
+            src_model="product.product"
+            view_mode="form"
+            target="new"
+            groups="sales_team.group_sale_manager"
+            view_type="form"/>
+</odoo>

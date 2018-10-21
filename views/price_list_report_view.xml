@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <odoo>
+    <data>
+    <record id="view_form_price_list_report" model="ir.ui.view">
+         <field name="name">view.form.price.list.report</field>
+         <field name="model">price.list.report</field>
+         <field name="arch" type="xml">
+            <form string="Price list report">
+              <header>
+                  <!-- <button name="exe_assigned" string="Descargar PDF" icon='fa-cloud-upload' class="oe_highlight" type="object" /> -->
+                  <button name="exe_csv" string="Download CSV" class="oe_highlight" icon='fa-book' type="object"/>
+                  <button name="exe_delete" string="Delete list products" icon='fa-times' type="object" confirm="You are sure you want to delete the products?"/>
+                  <field name="state" widget="statusbar"/>
+              </header>
+              <sheet>
+                  <field name="image_medium" widget="image" class="oe_avatar"/>
+
+                  <div class="oe_title">
+                           <h1>
+                               <field name="name" readonly="1"/>
+                           </h1>
+                        </div>
+
+                  <group>
+                      <group>
+                           <field name="desc" required="1"/>
+                           <field name="tag_ids" placeholder="Tags" widget="many2many_tags"  options="{'no_create_edit': True}"/>
+                           <field name="partner_id"/>
+                           <field name="mody_price"/>
+                       </group>
+                      <group>
+                          <field name="date" readonly="1"/>
+                          <!--
+                          <field name="file_name" invisible="1"/>
+                          <field name="file_01" filename="file_name"/>
+                          -->
+                          <field name="user_id"/>
+                          <field name="product_pricelist_id"/>
+                           <field name="product_pricelist_suggested_id"/>
+                       </group>
+                  </group>
+                  <notebook>
+
+                      <page name="list_product" string="Product List">
+                        <field name="list_product_ids">
+                            <tree string="Product List" editable="bottom">
+                                <field name="product_id" required="1"/>
+                                <field name="barcode" readonly="1"/>
+                                <field name="default_code" readonly="1"/>
+                                <field name="price" required="1"/>
+                                <field name="suggested_price" required="1"/>
+                            </tree>
+                        </field>
+                      </page>
+                      <page name="list_product" string="Note">
+                          <field name="obs" widget="html"/>
+                      </page>
+                  </notebook>
+
+               </sheet>
+                <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+
+        <record id="view_kanban_price_list_report" model="ir.ui.view">
+            <field name="name">Price list</field>
+            <field name="model">price.list.report</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="image_medium"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('product.product', 'image_medium', record.id.value)"/>
+                                </div>
+                                 <div class="o_kanban_tags_section">
+                                    <span class="oe_kanban_list_many2many">
+                                        <field name="tag_ids"/>
+                                    </span>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <strong><field name="name"/></strong>
+                                    <ul>
+                                        <li><strong>Name:</strong> <field name="desc"></field></li>
+                                        <li><strong>Partner:</strong> <field name="partner_id"></field></li>
+                                    </ul>
+                                    <div name="tags"/>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+    <record id="view_tree_price_list_report" model="ir.ui.view">
+         <field name="name">view.tree.price.list.report</field>
+         <field name="model">price.list.report</field>
+         <field name="arch" type="xml">
+             <tree  colors="Red:state=='draft';">
+                 <field name="name"/>
+                 <field name="desc"/>
+                 <field name="date"/>
+                 <field name="user_id"/>
+                 <field name="partner_id"/>
+                 <field name="tag_ids"/>
+                 <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_price_list_report" model="ir.actions.act_window">
+        <field name="name">Price list report</field>
+        <field name="res_model">price.list.report</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+        <field name="help" type="html">
+          <p class="oe_view_nocontent_create">
+            Press to create a New</p>
+       </field>
+    </record>
+
+    <menuitem id="menu_price_list_report"
+        name="Price list report"
+        parent="sale.menu_product_pricelist_main"
+        sequence="30"
+        action="action_price_list_report" />
+     </data>
+</odoo>

@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_price_list_report_user,access.price.list.report.user,model_price_list_report,sales_team.group_sale_manager,1,1,1,1
+access_price_tag_user,access.price.tag.use,model_price_tag,sales_team.group_sale_manager,1,1,1,1
+access_wizard_price_list_report_user,access.wizard.price.list.report.use,model_wizard_price_list_report,sales_team.group_sale_manager,1,1,1,1
